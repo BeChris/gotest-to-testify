@@ -59,11 +59,12 @@ func modifyFile(content []string) []string {
 
 	regexpReplacements := []map[string]string{
 		{
-			`Commentf\((.+)\)`:                     `fmt.Sprintf($1)`,
-			`c\.Assert\(err, ErrorMatches, (.+)\)`: `s.ErrorContains(err, $1)`,
-			`c\.Log\((.+)\)`:                       `s.T().Log($1)`,
-			`c\.Logf\((.+)\)`:                      `s.T().Logf($1)`,
-			`c\.Skip\((.+)\)`:                      `s.T().Skip($1)`,
+			`Commentf\((.+)\)`:                       `fmt.Sprintf($1)`,
+			`c\.Assert\(err, ErrorMatches, (.+)\)`:   `s.ErrorContains(err, $1)`,
+			`c\.Log\((.+)\)`:                         `s.T().Log($1)`,
+			`c\.Logf\((.+)\)`:                        `s.T().Logf($1)`,
+			`c\.Skip\((.+)\)`:                        `s.T().Skip($1)`,
+			`c\.Assert\((.+), Equals, len\((.+)\)\)`: `s.Len($2, $1)`,
 		},
 		{
 			`c\.Assert\(err, IsNil, (.+)\)`:             `s.NoError(err, $1)`,
@@ -71,8 +72,8 @@ func modifyFile(content []string) []string {
 			`c\.Assert\((.+), Equals, (.+), (.+)\)`:     `s.Equal($2, $1, $3)`,
 		},
 		{
-			`c\.Assert\(err, Equals, (.+)\)`:        `s.Equal(err, $1)`,
-			`c\.Assert\(err, DeepEquals, (.+)\)`:    `s.Equal(err, $1)`,
+			`c\.Assert\(err, Equals, (.+)\)`:        `s.ErrorIs(err, $1)`,
+			`c\.Assert\(err, DeepEquals, (.+)\)`:    `s.ErrorIs(err, $1)`,
 			`c\.Assert\((.+), Equals, true\)`:       `s.True($1)`,
 			`c\.Assert\((.+), Equals, false\)`:      `s.False($1)`,
 			`c\.Assert\((.+), IsNil\)`:              `s.Nil($1)`,

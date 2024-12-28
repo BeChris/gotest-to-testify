@@ -34,7 +34,7 @@ func Test(t *testing.T) {
 		},
 		{
 			[]string{"c.Assert(err, Equals, ErrGitModulesSymlink)"},
-			[]string{"s.Equal(err, ErrGitModulesSymlink)"},
+			[]string{"s.ErrorIs(err, ErrGitModulesSymlink)"},
 		},
 		{
 			[]string{"c.Assert(str, Equals, expected[i].s)"},
@@ -70,7 +70,7 @@ func Test(t *testing.T) {
 		},
 		{
 			[]string{"c.Assert(err, DeepEquals, e)"},
-			[]string{"s.Equal(err, e)"},
+			[]string{"s.ErrorIs(err, e)"},
 		},
 		{
 			[]string{"c.Assert(ok, Equals, true)"},
@@ -110,6 +110,11 @@ func Test(t *testing.T) {
 		{
 			[]string{"c.Assert(ps, HasLen, 2)"},
 			[]string{"s.Len(ps, 2)"},
+		},
+		// c.Assert(n, Equals, len(expected))
+		{
+			[]string{"c.Assert(n, Equals, len(expected))"},
+			[]string{"s.Len(expected, n)"},
 		},
 		{
 			[]string{`c.Assert(fmt.Sprintf("%x", idx.PackfileChecksum), Equals, f.PackfileHash)`},
