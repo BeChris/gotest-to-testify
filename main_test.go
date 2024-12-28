@@ -168,6 +168,14 @@ func Test(t *testing.T) {
 			[]string{`c.Log("Executing test cases:", tc.description)`},
 			[]string{`s.T().Log("Executing test cases:", tc.description)`},
 		},
+		{
+			[]string{`c.Logf("%q check failed", tc.url)`},
+			[]string{`s.T().Logf("%q check failed", tc.url)`},
+		},
+		{
+			[]string{`c.Skip("time.LoadLocation not supported in wasm")`},
+			[]string{`s.T().Skip("time.LoadLocation not supported in wasm")`},
+		},
 	} {
 		modifiedContent := modifyFile(testData.lines)
 

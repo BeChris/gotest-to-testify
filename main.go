@@ -58,17 +58,19 @@ func modifyFile(content []string) []string {
 	}
 
 	regexpReplacements := []map[string]string{
-		map[string]string{
+		{
 			`Commentf\((.+)\)`:                     `fmt.Sprintf($1)`,
 			`c\.Assert\(err, ErrorMatches, (.+)\)`: `s.ErrorContains(err, $1)`,
 			`c\.Log\((.+)\)`:                       `s.T().Log($1)`,
+			`c\.Logf\((.+)\)`:                      `s.T().Logf($1)`,
+			`c\.Skip\((.+)\)`:                      `s.T().Skip($1)`,
 		},
-		map[string]string{
+		{
 			`c\.Assert\(err, IsNil, (.+)\)`:             `s.NoError(err, $1)`,
 			`c\.Assert\(len\(([^)]+)\), Equals, (.+)\)`: `s.Len($1, $2)`,
 			`c\.Assert\((.+), Equals, (.+), (.+)\)`:     `s.Equal($2, $1, $3)`,
 		},
-		map[string]string{
+		{
 			`c\.Assert\(err, Equals, (.+)\)`:        `s.Equal(err, $1)`,
 			`c\.Assert\(err, DeepEquals, (.+)\)`:    `s.Equal(err, $1)`,
 			`c\.Assert\((.+), Equals, true\)`:       `s.True($1)`,
@@ -78,7 +80,7 @@ func modifyFile(content []string) []string {
 			`c\.Assert\((.+), Not\(IsNil\), (.+)\)`: `s.NotNil($1, $2)`,
 			`c\.Assert\((.+), NotNil\)`:             `s.NotNil($1)`,
 		},
-		map[string]string{
+		{
 			`c\.Assert\((.+), Equals, (.+)\)`:            `s.Equal($2, $1)`,
 			`c\.Assert\((.+), Not\(Equals\), (.+)\)`:     `s.NotEqual($2, $1)`,
 			`c\.Assert\((.+), DeepEquals, (.+)\)`:        `s.Equal($2, $1)`,
