@@ -178,6 +178,10 @@ func Test(t *testing.T) {
 			[]string{`s.T().Logf("%q check failed", tc.url)`},
 		},
 		{
+			[]string{`c.Errorf("missing object: %s", h)`},
+			[]string{`s.T().Errorf("missing object: %s", h)`},
+		},
+		{
 			[]string{`c.Skip("time.LoadLocation not supported in wasm")`},
 			[]string{`s.T().Skip("time.LoadLocation not supported in wasm")`},
 		},

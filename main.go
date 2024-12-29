@@ -63,6 +63,7 @@ func modifyFile(content []string) []string {
 			`c\.Assert\(err, ErrorMatches, (.+)\)`:   `s.ErrorContains(err, $1)`,
 			`c\.Log\((.+)\)`:                         `s.T().Log($1)`,
 			`c\.Logf\((.+)\)`:                        `s.T().Logf($1)`,
+			`c\.Errorf\((.+)\)`:                      `s.T().Errorf($1)`,
 			`c\.Skip\((.+)\)`:                        `s.T().Skip($1)`,
 			`c\.Assert\((.+), Equals, len\((.+)\)\)`: `s.Len($2, $1)`,
 		},
